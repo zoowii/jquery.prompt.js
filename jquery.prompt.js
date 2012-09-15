@@ -1,4 +1,4 @@
-(function ($) {
+﻿(function ($) {
     $.fn.extend({
         prompt:function (data_url, max_num, ul_id, word_least_length_to_show_prompt, outer_css, line_css, line_selected_css) {
             max_num = max_num || '5'; // 每次最多获取的数据量，默认5行
@@ -42,7 +42,7 @@
                 'padding':'0px',
                 'line-height':'20px',
                 'background':'none repeat scroll 0 0',
-                'list-style-type': 'none'
+                'list-style-type':'none'
             });
             outer.css(outer_css);
             outer.offset({
@@ -65,6 +65,8 @@
                 now_selected.css(line_selected_css);
                 input.val(now_selected.text());
             }
+
+            var last_keyup_time = new Date().getTime();
 
             // 根据上下键选择
             input.bind('keyup', function (event) {
@@ -107,6 +109,11 @@
                         break;
                     default :
                     {
+                        var now_time = new Date().getTime();
+                        if (now_time - last_keyup_time < 500) { // 500ms内连续敲击不联网查询
+                            return;
+                        }
+                        last_keyup_time = now_time;
                         var word = input.val();
                         if (word.length < word_least_length_to_show_prompt) {
                             outer.hide();
