@@ -10,7 +10,8 @@
             line_css = line_css || {
                 'background-color':'white',
                 'color':'black',
-                'cursor':'pointer'
+                'cursor':'pointer',
+                'text-align': 'left'
             }; // 生成的li的css
             line_selected_css = line_selected_css || {
                 'background-color':'#EBEBEB'
@@ -48,7 +49,7 @@
             outer.offset({
                 left:l
             });
-            outer.width(w);
+            outer.width(w + parseInt(input.css('padding-left')) + parseInt(input.css('padding-right')));
             outer.hide();
 
             var currentIndex = -1;
